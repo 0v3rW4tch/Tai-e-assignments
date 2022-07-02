@@ -82,6 +82,31 @@ public abstract class Solver<Node, Fact> {
 
     protected void initializeBackward(CFG<Node> cfg, DataflowResult<Node, Fact> result) {
         // TODO - finish me
+        // 根据边界和node节点分别初始化
+
+        for(Node node : cfg){
+            // 边界的话一般也是是都处理in/out,边界不处理会报空指针错误 node的话in/out都需要 这是算法具体实现决定的
+            if(cfg.isExit(node)){
+                result.setInFact(node, analysis.newBoundaryFact(cfg));
+                result.setOutFact(node, analysis.newBoundaryFact(cfg));
+            }else if (cfg.isEntry(node)){
+                result.setOutFact(node, analysis.newBoundaryFact(cfg));
+                result.setInFact(node, analysis.newBoundaryFact(cfg));
+            }else {
+                result.setOutFact(node, analysis.newInitialFact());
+                result.setInFact(node, analysis.newInitialFact());
+            }
+
+        }
+
+
+
+
+
+
+
+
+
     }
 
     /**
